@@ -136,6 +136,17 @@ main:
             ArrayList<HashMap<String,
             String>> someJobs
     ) {
+
+//  iterate over arrayList & grab all 98 hashMap job entries
+//  use two for-loops --> arrayList then hashMap
+//  for-each Entry --> copy/paste from book or studio
+//  testPrintJobs.txt shows format to print all entries:
+    //  *****
+    //  position type: -- /n name: -- /n employer: -- /n
+    //  location: -- /n core competency: --
+    //  *****
+//  position type is already in the hashMap, no need to type that out
+//  focus first on listing all jobs in hashMap, then handle search term
         System.out.println("printJobs is not implemented yet");
     }
 }
