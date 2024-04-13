@@ -17,7 +17,7 @@ public class JobData {
 
     private static ArrayList <HashMap <String, String> > allJobs;
 
-    /**
+    /*
      * fetch list of all values in loaded data,
      *      without duplicates, for a given column_
      *
@@ -47,7 +47,7 @@ public class JobData {
         return allJobs;
     }
 
-    /**
+    /*
      * returns job data search results by key/value, including search term_
      *
      * For example,
@@ -76,7 +76,7 @@ public class JobData {
         return jobs;
     }
 
-    /**
+    /*
      * search all columns for given term_
      *
      * @param value --> search term to look for_
@@ -91,9 +91,9 @@ public class JobData {
         return null;
     }
 
-    /**
-     * read in data from CSV file & store in list_
-     */
+
+//  * read in data from CSV file & store in list_
+
     private static void loadData() {
 
         if (isDataLoaded) { return; } // only loads data once_
@@ -117,7 +117,7 @@ public class JobData {
 
                 allJobs.add(newJob);
             }
-            // flags data as loaded to avoid further loading_
+//          flags data as loaded to avoid further loading_
             isDataLoaded = true;
         }
         catch (IOException e) {

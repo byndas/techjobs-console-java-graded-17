@@ -12,7 +12,7 @@ public class TechJobs {
 /*
 main:
     asks user which column to apply list or search
-    if search, asks for search term
+    if search selected, asks for search term
     performs request on JobData class public method & displays results
     repeats until user ends program
 
@@ -21,9 +21,9 @@ main:
         method then parses, filters, presents formatted data
 */
 
-//  two hashMaps contain menu info to display
+//      next two hashMaps contain menu info to display
 
-        // initializes field map with key/name pairs
+//      initializes field map with key/name pairs
         HashMap <String, String> columnChoices = new HashMap<>();
         columnChoices.put("core competency", "Skill");
         columnChoices.put("employer", "Employer");
@@ -38,7 +38,7 @@ main:
 
         System.out.println("Welcome to LaunchCode's TechJobs App!");
 
-        // allows user to search until they quit program
+//      allows user to search until they quit program
         while (true) {
 
             String actionChoice = getUserSelection(
@@ -64,17 +64,17 @@ main:
                             + " Values ***"
                     );
 
-                    // prints list of skills, employers, etc
+//                  prints list of skills, employers, etc
                     for (String item : results) { System.out.println(item); }
                 }
             }
-            else { // user chooses "search"
-                // user chooses to search by skill or employer
+            else {
+//              user chooses to search by skill or employer
                 String searchField = getUserSelection(
                         "Search by:", columnChoices
                 );
 
-                // user chooses search term
+//              user chooses search term
                 System.out.println("\nSearch term:");
                 String searchTerm = in.nextLine();
 
@@ -91,7 +91,7 @@ main:
     }
 
 //  displays choice menu, returns chosen item key from choices Dictionary
-//  called in: actionChoice, columnChoice, searchField
+//  actionChoice, columnChoice, & searchField each call getUserSelection()
     private static String getUserSelection(
             String menuHeader,
             HashMap <String, String> choices
@@ -101,7 +101,7 @@ main:
         Boolean validChoice = false;
         String[] choiceKeys = new String[choices.size()];
 
-        // puts choices in order, pairing each with integer
+//      puts choices in order, pairing each with integer
         int i = 0;
         for (String choiceKey : choices.keySet()) {
             choiceKeys[i] = choiceKey;
@@ -110,7 +110,7 @@ main:
 
         do {
             System.out.println("\n" + menuHeader);
-            // prints available choices
+//          prints available choices
             for (int j = 0; j < choiceKeys.length; j++) {
                 System.out.println(
                     "" + j + " - " + choices.get(choiceKeys[j])
@@ -126,7 +126,7 @@ main:
 
                 if (shouldQuit) { return null; }
             }
-            // validates user input
+//          validates user input
             if (choiceIdx < 0 || choiceIdx >= choiceKeys.length) {
                 System.out.println("Invalid choice. Try again.");
             }
@@ -136,23 +136,25 @@ main:
         return choiceKeys[choiceIdx];
     }
 
-    // prints formatted job list
+//  prints formatted info list for all 98 jobs
     private static void printJobs(
             ArrayList <HashMap <String, String> > someJobs
     ) {
-
-//  iterate over arrayList & grab all 98 hashMap job entries
-//  use two for-loops --> arrayList over hashMap
-//  for-each Entry --> copy/paste from book or studio
-
-//  testPrintJobs.txt shows print format for all job entries:
-    //  *****
-    //  position type: -- /n name: -- /n employer: -- /n
-    //  location: -- /n core competency: --
-    //  *****
-
-//  position type is already in the hashMap, no need to type that out
-//  focus first on listing all jobs in hashMap, then handle search term
-        System.out.println("printJobs is not implemented yet");
+//      prints info for all jobs --> testPrintJobs.txt shows print format
+        for (HashMap <String, String> job : someJobs) {
+//          System.out.println(job);
+            for (Map.Entry <String, String> item : job.entrySet()){
+//              System.out.println(item);
+                System.out.println(
+                    "*****" + "\n" +
+                    item.getKey() + " : " + item.getValue() + "\n" +
+                    item.getKey() + " : " + item.getValue() + "\n" +
+                    item.getKey() + " : " + item.getValue() + "\n" +
+                    item.getKey() + " : " + item.getValue() + "\n" +
+                    item.getKey() + " : " + item.getValue() + "\n" +
+                    "*****" + "\n"
+                );
+           }
+        }
     }
 }
