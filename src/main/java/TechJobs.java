@@ -6,6 +6,7 @@ import java.util.Scanner;
 public class TechJobs {
 
     static Scanner in = new Scanner(System.in);
+
 //  presents menus depending on user choices
     public static void main (String[] args) {
 /*
@@ -19,8 +20,11 @@ main:
         asks method for non-Java sourced data
         method then parses, filters, presents formatted data
 */
+
+//  two hashMaps contain menu info to display
+
         // initializes field map with key/name pairs
-        HashMap<String, String> columnChoices = new HashMap<>();
+        HashMap <String, String> columnChoices = new HashMap<>();
         columnChoices.put("core competency", "Skill");
         columnChoices.put("employer", "Employer");
         columnChoices.put("location", "Location");
@@ -28,7 +32,7 @@ main:
         columnChoices.put("all", "All");
 
         // creates top-level menu options
-        HashMap<String, String> actionChoices = new HashMap<>();
+        HashMap <String, String> actionChoices = new HashMap<>();
         actionChoices.put("search", "Search");
         actionChoices.put("list", "List");
 
@@ -52,7 +56,7 @@ main:
                 if ( columnChoice.equals("all") ) { printJobs(JobData.findAll()); }
 
                 else {
-                    ArrayList<String> results = JobData.findAll(columnChoice);
+                    ArrayList <String> results = JobData.findAll(columnChoice);
 
                     System.out.println(
                             "\n*** All "
@@ -87,9 +91,10 @@ main:
     }
 
 //  displays choice menu, returns chosen item key from choices Dictionary
+//  called in: actionChoice, columnChoice, searchField
     private static String getUserSelection(
             String menuHeader,
-            HashMap<String, String> choices
+            HashMap <String, String> choices
     ) {
 
         int choiceIdx = -1;
@@ -133,18 +138,19 @@ main:
 
     // prints formatted job list
     private static void printJobs(
-            ArrayList<HashMap<String,
-            String>> someJobs
+            ArrayList <HashMap <String, String> > someJobs
     ) {
 
 //  iterate over arrayList & grab all 98 hashMap job entries
-//  use two for-loops --> arrayList then hashMap
+//  use two for-loops --> arrayList over hashMap
 //  for-each Entry --> copy/paste from book or studio
-//  testPrintJobs.txt shows format to print all entries:
+
+//  testPrintJobs.txt shows print format for all job entries:
     //  *****
     //  position type: -- /n name: -- /n employer: -- /n
     //  location: -- /n core competency: --
     //  *****
+
 //  position type is already in the hashMap, no need to type that out
 //  focus first on listing all jobs in hashMap, then handle search term
         System.out.println("printJobs is not implemented yet");
