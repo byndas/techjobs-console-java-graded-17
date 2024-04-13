@@ -48,6 +48,7 @@ main:
 
             if ( actionChoice == null ) { break; }
 
+//          user chooses LIST
             else if ( actionChoice.equals("list") ) {
 
                 String columnChoice =
@@ -64,12 +65,12 @@ main:
                             + " Values ***"
                     );
 
-//                  prints list of skills, employers, etc
+//                  prints list of all position types or employers or locations or skills
                     for (String item : results) { System.out.println(item); }
                 }
             }
-            else {
-//              user chooses to search by skill or employer
+
+            else { // user chooses SEARCH
                 String searchField = getUserSelection(
                         "Search by:", columnChoices
                 );
@@ -81,17 +82,20 @@ main:
                 if ( searchField.equals("all") ) {
                     printJobs(JobData.findByValue(searchTerm));
                 }
-                else {
+                else { // user chooses search menu option other than "all"
                     printJobs(
                         JobData.findByColumnAndValue(searchField, searchTerm)
                     );
+//                    if (JobData.findByColumnAndValue(searchField, searchTerm)) {
+//                        System.out.println("No Results");
+//                    }
                 }
             }
         }
     }
 
 //  displays choice menu, returns chosen item key from choices Dictionary
-//  actionChoice, columnChoice, & searchField each call getUserSelection()
+//  actionChoice, columnChoice, & searchField call getUserSelection()
     private static String getUserSelection(
             String menuHeader,
             HashMap <String, String> choices
@@ -101,7 +105,7 @@ main:
         Boolean validChoice = false;
         String[] choiceKeys = new String[choices.size()];
 
-//      puts choices in order, pairing each with integer
+//      pairs each menu option with incrementing integer
         int i = 0;
 
         for (String choiceKey : choices.keySet()) {
@@ -114,7 +118,7 @@ main:
 //          prints available choices
             for (int j = 0; j < choiceKeys.length; j++) {
                 System.out.println(
-                    "" + j + " - " + choices.get(choiceKeys[j])
+                    j + " - " + choices.get(choiceKeys[j])
                 );
             }
             if ( in.hasNextInt() ) {
@@ -127,7 +131,7 @@ main:
 
                 if (shouldQuit) { return null; }
             }
-//          validates user input
+//          validates user input for chosen menu #
             if (choiceIdx < 0 || choiceIdx >= choiceKeys.length) {
                 System.out.println("Invalid choice. Try again.");
             }
@@ -165,3 +169,46 @@ main:
         }
     }
 }
+
+/*  TASK 3: MAKE SEARCH METHODS CASE-INSENSITIVE
+
+        example: Watchtower Security job, line 31, CSV file
+            JavaScript & Javascript must be equivalent
+//////////////////////////////////////////////////////////////////////////////////
+Ask yourself:
+
+    Searching calls which methods?
+
+    How to compare a search string with job HashMap object field values?
+
+    How to ignore string cases during comparisons
+        without altering capitalization of items in allJobs
+            so that data prints as in job_data.csv?
+//////////////////////////////////////////////////////////////////////////////////
+
+    Review string methods in Data Types chapter
+
+//////////////////////////////////////////////////////////////////////////////////
+
+    App must:
+
+        Print each job field during search & when listing all columns
+        If no search results, display descriptive message
+        Allow user to search for string across all columns
+        Return case-insensitive results
+        Run auto-grading tests to ensure all tests pass
+
+    Once completed, submit assignment
+
+//////////////////////////////////////////////////////////////////////////////////
+
+    Bonus Missions:
+
+    Alphabetically sort prop list results_
+
+    Create a copy of allJobs for JobData.findAll() to return
+        instead of the default allJobs static prop
+            since anyone calling findAll() can alter the allJobs data_
+
+    Study constructors in Oracle ArrayList documentation_
+*/

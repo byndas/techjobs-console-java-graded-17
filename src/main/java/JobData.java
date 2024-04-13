@@ -86,8 +86,9 @@ public class JobData {
         findByValue(String value) {
 
         loadData(); // loads data, if not already loaded_
+        // TASK 2: write & implement this method!
 
-        // TODO - implement this method
+
         return null;
     }
 
@@ -125,5 +126,36 @@ public class JobData {
             e.printStackTrace();
         }
     }
-
 }
+
+/*  TASK 2: CREATE findByValue() METHOD
+        that searches all columns for search term
+
+findByValue() method in JobData class (line 85)
+    contains none of the code needed to work,
+        leave loadData() call as the first line
+
+A few observations:
+
+    Your code will contain no duplicate jobs
+
+    If a listing has:
+        position type: “Web - Front End”,
+        name: “Front end web dev”,
+            searching for “web” won't display that listing twice
+
+    As with printJobs,
+        if new column added to data,
+            your code automatically searches new column too
+
+    Do NOT call findByColumnAndValue() once for each column,
+        instead utilize loops & collection methods as previously done
+
+    Understand how findByColumnAndValue() works,
+        your code will share some similarities
+
+    Call findByValue() somewhere in main,
+        searching all columns prints a message
+            that helps you discern where to call findByValue(),
+                re-run program to test your code
+*/
