@@ -15,7 +15,7 @@ public class JobData {
     private static final String DATA_FILE = "src/main/resources/job_data.csv";
     private static boolean isDataLoaded = false;
 
-    private static ArrayList<HashMap<String, String>> allJobs;
+    private static ArrayList <HashMap <String, String> > allJobs;
 
     /**
      * fetch list of all values in loaded data,
@@ -24,29 +24,26 @@ public class JobData {
      * @param field --> column to retrieve values from_
      * @return --> lists all values in given field_
      */
-    public static ArrayList<String> findAll(String field) {
+    public static ArrayList <String> findAll(String field) {
 
-        // loads data, if not already loaded_
-        loadData();
+        loadData(); // loads data, if not already loaded_
 
-        ArrayList<String> values = new ArrayList<>();
+        ArrayList <String> values = new ArrayList<>();
 
-        for (HashMap<String, String> row : allJobs) {
+        for (HashMap <String, String> row : allJobs) {
+
             String aValue = row.get(field);
 
             if (!values.contains(aValue)) {
                 values.add(aValue);
             }
         }
-
         return values;
     }
 
-    public static ArrayList<HashMap<String, String>> findAll() {
+    public static ArrayList <HashMap <String, String> > findAll() {
 
-        // loads data, if not already loaded_
-        loadData();
-
+        loadData(); // loads data, if not already loaded_
         return allJobs;
     }
 
@@ -61,14 +58,14 @@ public class JobData {
      * @param value --> field value to search for_
      * @return --> lists all jobs matching criteria_
      */
-    public static ArrayList<HashMap<String, String>> findByColumnAndValue(String column, String value) {
+    public static ArrayList <HashMap <String, String> >
+        findByColumnAndValue(String column, String value) {
 
-        // loads data, if not already loaded_
-        loadData();
+        loadData(); // loads data, if not already loaded_
 
-        ArrayList<HashMap<String, String>> jobs = new ArrayList<>();
+        ArrayList <HashMap <String, String> > jobs = new ArrayList<>();
 
-        for (HashMap<String, String> row : allJobs) {
+        for (HashMap <String, String> row : allJobs) {
 
             String aValue = row.get(column);
 
@@ -76,7 +73,6 @@ public class JobData {
                 jobs.add(row);
             }
         }
-
         return jobs;
     }
 
@@ -86,10 +82,10 @@ public class JobData {
      * @param value --> search term to look for_
      * @return --> lists all jobs with at least one field containing value_
      */
-    public static ArrayList<HashMap<String, String>> findByValue(String value) {
+    public static ArrayList <HashMap <String, String> >
+        findByValue(String value) {
 
-        // loads data, if not already loaded_
-        loadData();
+        loadData(); // loads data, if not already loaded_
 
         // TODO - implement this method
         return null;
@@ -100,8 +96,7 @@ public class JobData {
      */
     private static void loadData() {
 
-        // only loads data once_
-        if (isDataLoaded) { return; }
+        if (isDataLoaded) { return; } // only loads data once_
 
         try { // opens CSV file, set-up pull-out column-header info & records_
             Reader in = new FileReader(DATA_FILE);
@@ -112,9 +107,9 @@ public class JobData {
 
             allJobs = new ArrayList<>();
 
-            // puts records in more friendly format_
-            for (CSVRecord record : records) {
-                HashMap<String, String> newJob = new HashMap<>();
+            for (CSVRecord record : records) { // formats records_
+
+                HashMap <String, String> newJob = new HashMap<>();
 
                 for (String headerLabel : headers) {
                     newJob.put(headerLabel, record.get(headerLabel));
@@ -122,11 +117,10 @@ public class JobData {
 
                 allJobs.add(newJob);
             }
-
             // flags data as loaded to avoid further loading_
             isDataLoaded = true;
-
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             System.out.println("Failed to load job data");
             e.printStackTrace();
         }

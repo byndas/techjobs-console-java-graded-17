@@ -37,48 +37,60 @@ main:
         // allows user to search until they quit program
         while (true) {
 
-            String actionChoice = getUserSelection("View jobs by (type 'x' to quit):", actionChoices);
+            String actionChoice = getUserSelection(
+                    "View jobs by (type 'x' to quit):",
+                    actionChoices
+            );
 
-            if (actionChoice == null) {
-                break;
-            } else if (actionChoice.equals("list")) {
+            if ( actionChoice == null ) { break; }
 
-                String columnChoice = getUserSelection("List", columnChoices);
+            else if ( actionChoice.equals("list") ) {
 
-                if (columnChoice.equals("all")) {
-                    printJobs(JobData.findAll());
-                } else {
+                String columnChoice =
+                        getUserSelection("List", columnChoices);
 
+                if ( columnChoice.equals("all") ) { printJobs(JobData.findAll()); }
+
+                else {
                     ArrayList<String> results = JobData.findAll(columnChoice);
 
-                    System.out.println("\n*** All " + columnChoices.get(columnChoice) + " Values ***");
+                    System.out.println(
+                            "\n*** All "
+                            + columnChoices.get(columnChoice)
+                            + " Values ***"
+                    );
 
                     // prints list of skills, employers, etc
-                    for (String item : results) {
-                        System.out.println(item);
-                    }
+                    for (String item : results) { System.out.println(item); }
                 }
-
-            } else { // chooses "search"
-
+            }
+            else { // user chooses "search"
                 // user chooses to search by skill or employer
-                String searchField = getUserSelection("Search by:", columnChoices);
+                String searchField = getUserSelection(
+                        "Search by:", columnChoices
+                );
 
                 // user chooses search term
                 System.out.println("\nSearch term:");
                 String searchTerm = in.nextLine();
 
-                if (searchField.equals("all")) {
+                if ( searchField.equals("all") ) {
                     printJobs(JobData.findByValue(searchTerm));
-                } else {
-                    printJobs(JobData.findByColumnAndValue(searchField, searchTerm));
+                }
+                else {
+                    printJobs(
+                        JobData.findByColumnAndValue(searchField, searchTerm)
+                    );
                 }
             }
         }
     }
 
-    // ﻿ returns chosen item key from choices Dictionary
-    private static String getUserSelection(String menuHeader, HashMap<String, String> choices) {
+//  displays choice menu, returns chosen item key from choices Dictionary
+    private static String getUserSelection(
+            String menuHeader,
+            HashMap<String, String> choices
+    ) {
 
         int choiceIdx = -1;
         Boolean validChoice = false;
@@ -92,40 +104,38 @@ main:
         }
 
         do {
-
             System.out.println("\n" + menuHeader);
-
             // prints available choices
             for (int j = 0; j < choiceKeys.length; j++) {
-                System.out.println("" + j + " - " + choices.get(choiceKeys[j]));
+                System.out.println(
+                    "" + j + " - " + choices.get(choiceKeys[j])
+                );
             }
-
-            if (in.hasNextInt()) {
+            if ( in.hasNextInt() ) {
                 choiceIdx = in.nextInt();
                 in.nextLine();
-            } else {
+            }
+            else {
                 String line = in.nextLine();
                 boolean shouldQuit = line.equals("x");
-                if (shouldQuit) {
-                    return null;
-                }
-            }
 
+                if (shouldQuit) { return null; }
+            }
             // validates user input
             if (choiceIdx < 0 || choiceIdx >= choiceKeys.length) {
                 System.out.println("Invalid choice. Try again.");
-            } else {
-                validChoice = true;
             }
-
-        } while(!validChoice);
-
+            else { validChoice = true; }
+        }
+        while(!validChoice);
         return choiceKeys[choiceIdx];
     }
 
-    // prints job list
-    private static void printJobs(ArrayList<HashMap<String, String>> someJobs) {
-
+    // prints formatted job list
+    private static void printJobs(
+            ArrayList<HashMap<String,
+            String>> someJobs
+    ) {
         System.out.println("printJobs is not implemented yet");
     }
 }
