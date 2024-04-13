@@ -103,6 +103,7 @@ main:
 
 //      puts choices in order, pairing each with integer
         int i = 0;
+
         for (String choiceKey : choices.keySet()) {
             choiceKeys[i] = choiceKey;
             i++;
@@ -136,24 +137,30 @@ main:
         return choiceKeys[choiceIdx];
     }
 
-//  prints formatted info list for all 98 jobs
+//  prints testPrintJobs.txt formatted list of all 98 jobs
     private static void printJobs(
             ArrayList <HashMap <String, String> > someJobs
     ) {
-//      prints info for all jobs --> testPrintJobs.txt shows print format
+        int count = 0;
+
         for (HashMap <String, String> job : someJobs) {
 //          System.out.println(job);
             for (Map.Entry <String, String> item : job.entrySet()){
 //              System.out.println(item);
-                System.out.println(
-                    "*****" + "\n" +
-                    item.getKey() + " : " + item.getValue() + "\n" +
-                    item.getKey() + " : " + item.getValue() + "\n" +
-                    item.getKey() + " : " + item.getValue() + "\n" +
-                    item.getKey() + " : " + item.getValue() + "\n" +
-                    item.getKey() + " : " + item.getValue() + "\n" +
-                    "*****" + "\n"
-                );
+                if (count == 0) {
+                    System.out.println("*****");
+                    count++;
+                }
+                else if (count < 6) {
+                    System.out.println(
+                        item.getKey() + ": " + item.getValue()
+                    );
+                    count++;
+                }
+                else {
+                    System.out.println("*****" + "\n");
+                    count = 0;
+                }
            }
         }
     }
