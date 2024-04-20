@@ -5,157 +5,107 @@ import org.apache.commons.csv.CSVRecord;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class JobData {
 
     private static final String DATA_FILE = "src/main/resources/job_data.csv";
     private static boolean isDataLoaded = false;
 
-    private static ArrayList <HashMap <String, String> > allJobs;
-
-    /*
-     * fetch list of all values in loaded data,
-     *      without duplicates, for a given column_
-     *
-     * @param field --> column to retrieve values from_
-     * @return --> lists all values in given field_
-     */
-    public static ArrayList <String> findAll(String field) {
-
+    private static ArrayList <HashMap <String, String>> allJobs;
+//  returns ArrayList of jobs from column(s) matching search term, no duplicates_
+    public static ArrayList <String>
+    findAll(String field) {
+//      param field is a column_
         loadData(); // loads data, if not already loaded_
-
+//      storage for job entries that match search term
         ArrayList <String> values = new ArrayList<>();
-
+//      adds jobs containing search term to values ArrayList
         for (HashMap <String, String> row : allJobs) {
-
             String aValue = row.get(field);
-
             if (!values.contains(aValue)) {
                 values.add(aValue);
             }
         }
         return values;
     }
-
-    public static ArrayList <HashMap <String, String> > findAll() {
-
+//  returns all job entries
+    public static ArrayList <HashMap <String, String>>
+    findAll() {
         loadData(); // loads data, if not already loaded_
-        return allJobs;
+
+//      BONUS #2: cloning allJobs ArrayList
+//          to clone any singular object data type,
+//              new DataType(originalDataTypeInstance)
+        ArrayList <HashMap <String, String>> allJobsClone = new ArrayList<>();
+
+        for( HashMap<String, String> job : allJobs ) {
+            HashMap<String, String> jobClone = new HashMap<>(job);
+            allJobsClone.add(jobClone);
+        }
+
+        return allJobsClone;
     }
-
-    /*
-     * returns job data search results by key/value, including search term_
-     *
-     * For example,
-     *      searching employer "Enterprise" includes
-     *          results with "Enterprise Holdings, Inc"_
-     *
-     * @param column --> column to be searched_
-     * @param value --> field value to search for_
-     * @return --> lists all jobs matching criteria_
-     */
-    public static ArrayList <HashMap <String, String> >
-        findByColumnAndValue(String column, String value) {
-
+//  returns ArrayList of all key/value jobs containing search term_
+    public static ArrayList <HashMap <String, String>>
+    findByColumnAndValue(String column, String value) {
+//      param value is the search term_
         loadData(); // loads data, if not already loaded_
-
         ArrayList <HashMap <String, String> > jobs = new ArrayList<>();
-
         for (HashMap <String, String> row : allJobs) {
-
             String aValue = row.get(column);
-
-            if (aValue.contains(value)) {
+//          TASK 3: MAKE SEARCH METHODS CASE-INSENSITIVE
+            if (aValue.toLowerCase().contains(value.toLowerCase())) {
                 jobs.add(row);
             }
         }
         return jobs;
     }
-
-    /*
-     * search all columns for given term_
-     *
-     * @param value --> search term to look for_
-     * @return --> lists all jobs with at least one field containing value_
-     */
-    public static ArrayList <HashMap <String, String> >
-        findByValue(String value) {
-
+//  TASK TWO:
+//      searches all columns for search term value, omits duplicate jobs_
+    public static ArrayList <HashMap <String, String>>
+    findByValue(String searchTerm) {
         loadData(); // loads data, if not already loaded_
-        // TASK 2: write & implement this method!
 
+        ArrayList <HashMap <String, String>> matchingJobs = new ArrayList<>();
 
-        return null;
+        String searchTermLowerCase = searchTerm.toLowerCase();
+
+        for (HashMap <String, String> job : allJobs) {
+            for (String item : job.values()) {
+//              TASK 3: MAKE SEARCH METHODS CASE-INSENSITIVE
+                if (item.toLowerCase().contains(searchTermLowerCase)) {
+                    matchingJobs.add(job);
+                    break; // next job object, prevents adding duplicate jobs
+                }
+            }
+        }
+        return matchingJobs;
     }
-
-
-//  * read in data from CSV file & store in list_
-
+//  loads & stores CSV file data into allJobs ArrayList_
     private static void loadData() {
-
         if (isDataLoaded) { return; } // only loads data once_
-
-        try { // opens CSV file, set-up pull-out column-header info & records_
+        try { // opens CSV file, sets up getting column-header info & records_
             Reader in = new FileReader(DATA_FILE);
             CSVParser parser = CSVFormat.RFC4180.withFirstRecordAsHeader().parse(in);
             List<CSVRecord> records = parser.getRecords();
-            Integer numberOfColumns = records.get(0).size();
+            int numberOfColumns = records.get(0).size();
             String[] headers = parser.getHeaderMap().keySet().toArray(new String[numberOfColumns]);
 
             allJobs = new ArrayList<>();
 
             for (CSVRecord record : records) { // formats records_
-
                 HashMap <String, String> newJob = new HashMap<>();
-
                 for (String headerLabel : headers) {
                     newJob.put(headerLabel, record.get(headerLabel));
                 }
-
                 allJobs.add(newJob);
             }
-//          flags data as loaded to avoid further loading_
-            isDataLoaded = true;
+            isDataLoaded = true; // prevents re-loading data_
         }
-        catch (IOException e) {
+        catch (IOException e) { // e is instance of IOException
             System.out.println("Failed to load job data");
-            e.printStackTrace();
+//            e.printStackTrace(); // for debugging error
         }
     }
 }
-
-/*  TASK 2: CREATE findByValue() METHOD
-        that searches all columns for search term
-
-findByValue() method in JobData class (line 85)
-    contains none of the code needed to work,
-        leave loadData() call as the first line
-
-A few observations:
-
-    Your code will contain no duplicate jobs
-
-    If a listing has:
-        position type: “Web - Front End”,
-        name: “Front end web dev”,
-            searching for “web” won't display that listing twice
-
-    As with printJobs,
-        if new column added to data,
-            your code automatically searches new column too
-
-    Do NOT call findByColumnAndValue() once for each column,
-        instead utilize loops & collection methods as previously done
-
-    Understand how findByColumnAndValue() works,
-        your code will share some similarities
-
-    Call findByValue() somewhere in main,
-        searching all columns prints a message
-            that helps you discern where to call findByValue(),
-                re-run program to test your code
-*/
