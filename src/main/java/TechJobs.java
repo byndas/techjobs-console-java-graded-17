@@ -136,7 +136,7 @@ public class TechJobs {
 
                 if (shouldQuit) { return null; }
             }
-//          validates user input for chosen menu #
+//          validates user input for chosen menu item #
             if (choiceIdx < 0 || choiceIdx >= choiceKeys.length) {
                 System.out.println("Invalid choice. Try again.");
             }
