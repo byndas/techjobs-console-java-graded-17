@@ -75,25 +75,19 @@ public class TechJobs {
 
 //              intelliJ warns searchField can be null
                 if (searchField != null) {
+                    ArrayList<HashMap <String, String>> searchResults;
+
                     if (searchField.equals("all")) {
-                        ArrayList<HashMap<String, String>>
-                            searchResults = JobData.findByValue(searchTerm);
-
-                        if (searchResults.isEmpty()) {
-                            System.out.println("No results");
-                        } else {
-                            printJobs(searchResults);
-                        }
-                    } else { // user chooses search menu option other than "all"
-                        ArrayList<HashMap<String, String>>
-                            searchResults = JobData.findByColumnAndValue(searchField, searchTerm);
-
-                        if (searchResults.isEmpty()) {
-                            System.out.println("No Results");
-                        } else {
-                            printJobs(searchResults);
-                        }
+                        searchResults = JobData.findByValue(searchTerm);
                     }
+                    else { // user chooses search menu option other than "all"
+                        searchResults =
+                            JobData.findByColumnAndValue(searchField, searchTerm);
+                    }
+                    if (searchResults.isEmpty()) {
+                        System.out.println("No Results");
+                    }
+                    else { printJobs(searchResults); }
                 }
             }
         }
