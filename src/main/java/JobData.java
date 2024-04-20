@@ -105,6 +105,7 @@ public class JobData {
         }
         catch (IOException e) { // e is instance of IOException
             System.out.println("Failed to load job data");
+//            intelliJ warns logging not robust enough
 //            e.printStackTrace(); // for debugging error
         }
     }

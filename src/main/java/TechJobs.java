@@ -44,8 +44,8 @@ public class TechJobs {
                 String columnChoice =
                         getUserSelection("List", columnChoices);
 
+//              intelliJ warns searchField can be null
                 if(columnChoice != null) {
-
                     if (columnChoice.equals("all")) {
                         printJobs(JobData.findAll());
                     } else {
@@ -73,8 +73,8 @@ public class TechJobs {
                 System.out.println("\nSearch term:");
                 String searchTerm = in.nextLine();
 
+//              intelliJ warns searchField can be null
                 if (searchField != null) {
-                    // intelliJ warns searchField can be null
                     if (searchField.equals("all")) {
                         ArrayList<HashMap<String, String>>
                             searchResults = JobData.findByValue(searchTerm);
