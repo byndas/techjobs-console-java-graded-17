@@ -44,7 +44,7 @@ public class TechJobs {
                 String columnChoice =
                         getUserSelection("List", columnChoices);
 
-//              intelliJ warns searchField can be null
+//              intelliJ warns searchField can be null 
                 if(columnChoice != null) {
                     if (columnChoice.equals("all")) {
                         printJobs(JobData.findAll());
