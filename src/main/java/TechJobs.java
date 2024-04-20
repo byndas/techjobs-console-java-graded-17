@@ -85,7 +85,7 @@ public class TechJobs {
                             JobData.findByColumnAndValue(searchField, searchTerm);
                     }
                     if (searchResults.isEmpty()) {
-                        System.out.println("No Results");
+                        System.out.println("No Results\n");
                     }
                     else { printJobs(searchResults); }
                 }
